@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/* 
+  The foundation of the Canvas.
+  We strip away the defaults of the browser to create a pure, dark void.
+  The transition duration is intentionally set to 3000ms. 
+  When the human inputs their reality, the color does not snap; it breathes into existence.
+*/
+@layer base {
+  body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 3000ms;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #050505; /* The initial void: Deep, almost black */
+    color: #e5e5e5; /* Soft light for the text */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* 
+  We hide the scrollbar. 
+  Visual noise distracts the human from their physical presence.
+  The scroll should feel infinite, like memory.
+*/
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/*
+  The fade-in animation.
+  When text appears, it should not jolt the user.
+  It rises gently from below, materializing over 3 seconds.
+*/
+.fade-in {
+  animation: fadeIn 3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
