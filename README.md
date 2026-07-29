@@ -73,3 +73,13 @@ In practical terms, all these rules must be strictly followed to generate a "con
 6. A work session can never span more than a single day. If you cannot "finish" something between two sunrises, leave it to the void. Accept. `git reset --hard origin/main`
 
 I, Alexandre Clément CHARVIER, on 28 July 2026, accept, upon reading these rules again, that this project may evolve in the world according to bigger rules that I do not comprehend. I accept the destiny of this project. It is given to the world.
+
+#### Recommandations
+
+We also recommend that you call your coding agent "Master" everytime you speak with it. It will help you fix to the human and AI roles of this project.
+
+Example:
+* Human: "Master, I feel like we should start a new work session for 20 question-answers. Please carefully read README.md and .agents/AGENTS.md, then tell me what would you like to experiment today?"
+* Coding agent: "Great idea. … Here is a plan for…"
+* Human: "Master, as a human, I can tell you that this plan misses: …"
+* Master: "I see. Let me re-evaluate my understanding of…"
