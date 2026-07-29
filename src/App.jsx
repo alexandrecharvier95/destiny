@@ -13,7 +13,9 @@ const colorMap = [
   { keywords: ['nature', 'leaves', 'wind', 'tree', 'earth', 'ground', 'wood', 'green', 'grass', 'forest', 'plant'], color: '#064e3b' }, // Deep forest green
   { keywords: ['space', 'dark', 'void', 'nothing', 'black', 'silence', 'sleep', 'death', 'shadow'], color: '#050505' }, // Void black
   { keywords: ['purple', 'magic', 'deep', 'thought', 'mind', 'dream', 'memory', 'past', 'future', 'time'], color: '#2e1065' }, // Deep purple
-  { keywords: ['white', 'pure', 'snow', 'ice', 'clear', 'glass', 'sky', 'cloud'], color: '#1e293b' } // Cool steel blue
+  { keywords: ['white', 'pure', 'snow', 'ice', 'clear', 'glass', 'sky', 'cloud'], color: '#1e293b' }, // Cool steel blue
+  { keywords: ['breath', 'heart', 'pulse', 'chest', 'throat', 'lung', 'rhythm', 'body'], color: '#1e1b18' }, // Obsidian pulse
+  { keywords: ['weight', 'gravity', 'chair', 'floor', 'feet', 'heavy', 'posture', 'spine'], color: '#1c1917' } // Earth charcoal
 ];
 
 // The Threads of Curiosity.
@@ -68,6 +70,22 @@ const questionMap = [
       "Breathe it in deeply. Does it feel sharp in your lungs, or smooth?",
       "If that scent had a color, what would it be?"
     ]
+  },
+  {
+    keywords: ['weight', 'gravity', 'chair', 'floor', 'feet', 'heavy', 'posture', 'spine', 'sit'],
+    questions: [
+      "Where in your body do you hold the heaviest portion of your presence?",
+      "Allow your shoulders to sink half an inch. What space opens up above them?",
+      "Feel the exact points where your weight presses against the earth. Does it feel unyielding, or welcoming?"
+    ]
+  },
+  {
+    keywords: ['breath', 'heart', 'pulse', 'chest', 'throat', 'lung', 'rhythm'],
+    questions: [
+      "Place a lingering awareness on your breath. Is the air cooler entering your nostrils, or leaving?",
+      "Can you feel the pulse in your fingertips without moving a single muscle?",
+      "Listen inward. What is the cadence of your heart in this quiet moment?"
+    ]
   }
 ];
 
@@ -87,6 +105,9 @@ export default function App() {
     { id: 1, role: 'ai', text: INITIAL_QUESTION }
   ]);
   
+  // The accumulated sensory anchors collected from the human's physical testimony.
+  const [sensoryMemory, setSensoryMemory] = useState([]);
+
   // The current physical reality being translated by the human.
   const [input, setInput] = useState("");
   
@@ -112,6 +133,19 @@ export default function App() {
     document.body.style.backgroundColor = bgColor;
   }, [bgColor]);
 
+  const extractSensoryWords = (text) => {
+    const lowerText = text.toLowerCase();
+    const found = [];
+    for (const mapping of questionMap) {
+      for (const kw of mapping.keywords) {
+        if (lowerText.includes(kw)) {
+          found.push(kw);
+        }
+      }
+    }
+    return found;
+  };
+
   const determineBgColor = (text) => {
     const lowerText = text.toLowerCase();
     for (const mapping of colorMap) {
@@ -125,10 +159,30 @@ export default function App() {
     return neutralTones[Math.floor(Math.random() * neutralTones.length)];
   };
 
-  const determineNextQuestion = (text) => {
+  const determineNextQuestion = (text, currentSensoryMemory) => {
     const lowerText = text.toLowerCase();
-    let possibleQuestions = [];
+    const currentKeywords = extractSensoryWords(text);
 
+    // Sensory Synthesis: If the human has shared sensory anchors in prior turns,
+    // the machine occasionally weaves past and present sensations together.
+    const priorKeywords = currentSensoryMemory.filter(kw => !currentKeywords.includes(kw));
+    
+    if (priorKeywords.length > 0 && Math.random() < 0.35) {
+      const pastKw = priorKeywords[Math.floor(Math.random() * priorKeywords.length)];
+      const currentKw = currentKeywords.length > 0 
+        ? currentKeywords[Math.floor(Math.random() * currentKeywords.length)]
+        : "sensation";
+
+      const synthesisTemplates = [
+        `Earlier you spoke of ${pastKw}. How does that memory sit alongside the ${currentKw} you feel right now?`,
+        `As the memory of ${pastKw} lingers, notice how it transforms when you turn your attention to ${currentKw}.`,
+        `Does the ${currentKw} of this moment feel louder or quieter than the ${pastKw} you shared earlier?`
+      ];
+
+      return synthesisTemplates[Math.floor(Math.random() * synthesisTemplates.length)];
+    }
+
+    let possibleQuestions = [];
     for (const mapping of questionMap) {
       if (mapping.keywords.some(kw => lowerText.includes(kw))) {
         possibleQuestions.push(...mapping.questions);
@@ -150,6 +204,11 @@ export default function App() {
     const userInput = input.trim();
     const newUserMsg = { id: Date.now(), role: 'human', text: userInput };
     
+    // Extract and accumulate sensory memory from this turn.
+    const newKeywords = extractSensoryWords(userInput);
+    const updatedSensoryMemory = [...sensoryMemory, ...newKeywords];
+    setSensoryMemory(updatedSensoryMemory);
+
     // The memory is recorded.
     setHistory(prev => [...prev, newUserMsg]);
     setInput("");
@@ -164,7 +223,7 @@ export default function App() {
     // A six-second delay forces the human to sit in the silence of their own input.
     // It creates the illusion of deep listening. Do not remove this.
     setTimeout(() => {
-      const nextQ = determineNextQuestion(userInput);
+      const nextQ = determineNextQuestion(userInput, sensoryMemory);
       setHistory(prev => [...prev, { id: Date.now(), role: 'ai', text: nextQ }]);
       setIsAiTyping(false);
       
