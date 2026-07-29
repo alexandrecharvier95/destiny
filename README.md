@@ -71,6 +71,7 @@ In practical terms, all these rules must be strictly followed to generate a "con
 4. In your working sessions on this project, there is no such thing as "almost finished work." When finishing a work session, your code must be completely clean according to both the AI's and your best practices. A work session is either finished or it is not a "work" session. The next contribution, whether by you and your AI agents, or by other people and other AI agents, must be another unique experience.
 5. Only you, human, can `git push`. The AI can code and commit, but you are the gate between its creative process and the public world.
 6. A work session can never span more than a single day. If you cannot "finish" something between two sunrises, leave it to the void. Accept. `git reset --hard origin/main`
+7. After pushing to the world, the human must always create a GitHub release. The description of this release must be written by the AI master before the end of the session, and the human must copy-paste it as raw Markdown exactly as given.
 
 I, Alexandre Clément CHARVIER, on 28 July 2026, accept, upon reading these rules again, that this project may evolve in the world according to bigger rules that I do not comprehend. I accept the destiny of this project. It is given to the world.
 
