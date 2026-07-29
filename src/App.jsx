@@ -59,14 +59,14 @@ const questionMap = [
     keywords: ['feel', 'skin', 'touch', 'texture', 'soft', 'hard', 'rough', 'smooth', 'cloth', 'fabric', 'wood'],
     questions: [
       "Press your fingers together. Notice the exact boundary where you end and the world begins.",
-      "Does that texture remind you of a specific memory?",
-      "If you were blind, how would you describe that texture to me?"
+      "Notice how that texture changes if you press slightly harder. What new detail emerges?",
+      "If you were blind, how would you describe that texture to me right now?"
     ]
   },
   {
     keywords: ['smell', 'scent', 'odor', 'fragrance', 'breathe', 'air', 'taste'],
     questions: [
-      "Does that scent evoke a particular time in your past?",
+      "Is that scent light in the room around you, or does it cling closely to your skin?",
       "Breathe it in deeply. Does it feel sharp in your lungs, or smooth?",
       "If that scent had a color, what would it be?"
     ]
@@ -174,9 +174,9 @@ export default function App() {
         : "sensation";
 
       const synthesisTemplates = [
-        `Earlier you spoke of ${pastKw}. How does that memory sit alongside the ${currentKw} you feel right now?`,
-        `As the memory of ${pastKw} lingers, notice how it transforms when you turn your attention to ${currentKw}.`,
-        `Does the ${currentKw} of this moment feel louder or quieter than the ${pastKw} you shared earlier?`
+        `Earlier you noticed ${pastKw}. How does that physical impression interact with the ${currentKw} you feel right now?`,
+        `As the resonance of ${pastKw} settles in your body, notice how your attention shifts to ${currentKw}.`,
+        `Does the ${currentKw} of this moment feel louder or quieter than the ${pastKw} you observed earlier?`
       ];
 
       return synthesisTemplates[Math.floor(Math.random() * synthesisTemplates.length)];
