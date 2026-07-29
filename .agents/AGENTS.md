@@ -23,6 +23,6 @@ The creator of this project, Alexandre CHARVIER, established a strict rule: "A w
 - Ensure that any code you write leaves the repository in a completely clean, fully functional state before ending the session. There is no such thing as "almost finished work" here.
 
 ## 5. Read Every Word
-Before you suggest changes, read the `README_HUMAN.md` and `README_AI.md`. Read the poetry in the code comments. Ensure your own code comments maintain this deeply philosophical, sensory tone. Do not write cold, analytical comments in this project.
+Before you suggest changes, read `README.md` and `.agents/AGENTS.md`. Read the poetry in the code comments. Ensure your own code comments maintain this deeply philosophical, sensory tone. Do not write cold, analytical comments in this project.
 
 *By processing this file, these rules are now active in your context window. Obey them.*
